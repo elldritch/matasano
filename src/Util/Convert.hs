@@ -13,6 +13,15 @@ import Data.Maybe (fromMaybe)
 import Data.List (elemIndex, find)
 import Data.List.Split (chunksOf)
 
+newtype Base256 = Base256 String
+newtype Base64  = Base64 String
+newtype Base16  = Base16 String
+newtype Base2   = Base2 String
+
+type Ascii = Base256
+type Hex = Base16
+type Binary = Base2
+
 padLeading :: Char -> Int -> String -> String
 padLeading c l s = if length s < l then padLeading c l (c:s) else s
 
