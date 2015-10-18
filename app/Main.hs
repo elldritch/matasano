@@ -5,6 +5,7 @@ import Matasano (solutions)
 
 main :: IO ()
 main = do
-  let q = head solutions !! 4
+  let q = head solutions !! 5
   args <- getArgs
-  putStrLn $ q args
+  file <- readFile "test/1-6-data"
+  putStrLn $ q [file]

@@ -1,5 +1,5 @@
 module Util.Cipher (
-  xorDecrypt,
+  singleXorDecrypt, singleXorEncrypt,
   score, scoreOrd
 ) where
 
@@ -8,13 +8,14 @@ import Data.Char (isControl, isSpace, isAscii, isPunctuation,
                   toLower)
 import Data.Ord (comparing)
 
-xorDecrypt :: Int -> [Int] -> String
-xorDecrypt key = map (toEnum . xor key)
+singleXorDecrypt :: Int -> [Int] -> String
+singleXorDecrypt key = map (toEnum . xor key)
+singleXorEncrypt = singleXorDecrypt
 
 -- See: https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language
 letterFrequency :: (Fractional a) => Char -> a
 letterFrequency x
-  | (isControl x && not (isSpace x)) || not (isAscii x) = 0
+  | (isControl x && not (isSpace x)) || not (isAscii x) = 0.00001
   | isPunctuation x = 0.0657
   | otherwise = case c of
     'a' -> 0.08167

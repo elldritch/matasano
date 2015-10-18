@@ -1,10 +1,10 @@
-module Basics.DetectSingleCharacterXor (bestXor1Candidate') where
+module Basics.DetectSingleCharacterXor (singleXorBreakMany) where
 
 import Data.List (maximumBy)
 
 import Util.Cipher (scoreOrd)
-import Basics.SingleByteXorCipher (bestXor1Candidate)
+import Basics.SingleByteXorCipher (singleXorBreak)
 
-bestXor1Candidate' :: [String] -> String
-bestXor1Candidate' xs = maximumBy scoreOrd candidates
-  where candidates = map bestXor1Candidate xs
+singleXorBreakMany :: [String] -> String
+singleXorBreakMany xs = maximumBy scoreOrd candidates
+  where candidates = map singleXorBreak xs
