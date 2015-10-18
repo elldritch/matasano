@@ -4,20 +4,24 @@ module Util.Cipher (
 ) where
 
 import Data.Bits (xor)
-import Data.Char (isControl, isSpace,
+import Data.Char (isControl, isSpace, isAscii, isPunctuation,
                   toLower)
 import Data.Ord (comparing)
 
 xorDecrypt :: Int -> [Int] -> String
 xorDecrypt key = map (toEnum . xor key)
 
+-- See: https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language
 letterFrequency :: (Fractional a) => Char -> a
-letterFrequency x = if isControl c && not (isSpace c) then 0 else case c of
+letterFrequency x
+  | (isControl x && not (isSpace x)) || not (isAscii x) = 0
+  | isPunctuation x = 0.0657
+  | otherwise = case c of
     'a' -> 0.08167
     'b' -> 0.01492
-    'd' -> 0.04253
     'c' -> 0.02782
-    'e' -> 0.02702
+    'd' -> 0.04253
+    'e' -> 0.12702
     'f' -> 0.02228
     'g' -> 0.02015
     'h' -> 0.06094
@@ -39,6 +43,7 @@ letterFrequency x = if isControl c && not (isSpace c) then 0 else case c of
     'x' -> 0.00150
     'y' -> 0.01974
     'z' -> 0.00074
+    ' ' -> 0.1217
     _   -> 0.001
   where c = toLower x
 
