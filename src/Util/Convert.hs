@@ -2,12 +2,15 @@ module Util.Convert (
   padLeading, pad0,
   decode2, encode2,
   decode16, encode16,
-  encode64
+  decode64, encode64,
+  decode64Char, encode64Char
 ) where
 
 import Numeric (showIntAtBase, readInt,
                 readHex, showHex)
 import Data.Char (intToDigit, digitToInt)
+import Data.Maybe (fromMaybe)
+import Data.List (elemIndex, find)
 import Data.List.Split (chunksOf)
 
 padLeading :: Char -> Int -> String -> String
@@ -35,3 +38,13 @@ encode64Char n = base64Table !! n
 
 encode64 :: (Integral a, Show a) => a -> String
 encode64 n = showIntAtBase 64 encode64Char n ""
+
+decode64Char :: Char -> Int
+decode64Char c = fromMaybe (-1) $ elemIndex c base64Table
+
+decode64 :: (Integral a) => String -> a
+decode64 = fst . head . readInt 64 (\c ->
+    case find (== c) base64Table of
+      Just x -> True
+      Nothing -> False)
+  decode64Char
