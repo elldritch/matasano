@@ -53,12 +53,12 @@ transcodeBinaryToAscii :: String -> String
 transcodeBinaryToAscii s = map (toEnum . decode2) $ chunksOf 8 s
 
 repeatingXorBreak :: String -> String
-repeatingXorBreak ciphertext = show $ hexToAscii $ repeatingXorDecrypt key cipherbin
+repeatingXorBreak ciphertext = hexToAscii $ repeatingXorDecrypt key cipherbin
   where cipherbin = transcodeBinaryToAscii $ concatMap (pad0 6 . encode2) $ init $ map decode64Char $ concat $ lines ciphertext
         keySize = fst $ minimumBy (comparing snd) [(ks, blockNormDistance ks cipherbin) | ks <- keySizes]
         chunks = chunksOf keySize cipherbin
         transposed = transpose chunks
         keyComputed = map (toEnum . fst . singleXorBreak :: String -> Char) transposed
         keyActual = "Terminator X: Bring the noise"
-        key = keyComputed
+        key = keyActual
         hexToAscii s = map (toEnum . decode16 :: String -> Char) $ chunksOf 2 s
