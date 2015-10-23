@@ -1,5 +1,6 @@
 module Util.Cipher (
   singleXorDecrypt, singleXorEncrypt,
+  singleXorDecrypt', singleXorEncrypt',
   score, scoreOrd
 ) where
 
@@ -10,7 +11,15 @@ import Data.Ord (comparing)
 
 singleXorDecrypt :: Int -> [Int] -> String
 singleXorDecrypt key = map (toEnum . xor key)
+
+singleXorEncrypt :: Int -> [Int] -> String
 singleXorEncrypt = singleXorDecrypt
+
+singleXorDecrypt' :: Int -> [Int] -> [Int]
+singleXorDecrypt' key = map (xor key)
+
+singleXorEncrypt' :: Int -> [Int] -> [Int]
+singleXorEncrypt' = singleXorDecrypt'
 
 -- See: https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language
 letterFrequency :: (Fractional a) => Char -> a
