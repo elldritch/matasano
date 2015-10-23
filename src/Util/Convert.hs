@@ -5,7 +5,9 @@ module Util.Convert (
   decode16', encode16',
   decode64, encode64,
   encode64',
-  decode64Char, encode64Char
+  decode64Char, encode64Char,
+  viewS, viewN,
+  makeS, makeN
 ) where
 
 import Numeric (showIntAtBase, readInt,
@@ -67,3 +69,15 @@ decode64 = fst . head . readInt 64 (\c ->
       Just x -> True
       Nothing -> False)
   decode64Char
+
+viewS :: ByteString -> String
+viewS = BS8.unpack
+
+viewN :: ByteString -> [Int]
+viewN b = map fromIntegral $ BS.unpack b
+
+makeS :: String -> ByteString
+makeS = BS8.pack
+
+makeN :: [Int] -> ByteString
+makeN xs = BS.pack $ map fromIntegral xs
