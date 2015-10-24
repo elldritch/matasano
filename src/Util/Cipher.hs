@@ -1,19 +1,11 @@
 module Util.Cipher (
-  singleXorDecrypt, singleXorEncrypt,
   singleXorDecrypt', singleXorEncrypt',
-  score, scoreOrd
+  score
 ) where
 
 import Data.Bits (xor)
 import Data.Char (isControl, isSpace, isAscii, isPunctuation,
                   toLower)
-import Data.Ord (comparing)
-
-singleXorDecrypt :: Int -> [Int] -> String
-singleXorDecrypt key = map (toEnum . xor key)
-
-singleXorEncrypt :: Int -> [Int] -> String
-singleXorEncrypt = singleXorDecrypt
 
 singleXorDecrypt' :: Int -> [Int] -> [Int]
 singleXorDecrypt' key = map (xor key)
@@ -59,6 +51,3 @@ letterFrequency x
 
 score :: (Fractional a) => String -> a
 score = product . map letterFrequency
-
-scoreOrd :: String -> String -> Ordering
-scoreOrd = comparing (score :: String -> Double)
