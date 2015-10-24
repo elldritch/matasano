@@ -25,6 +25,7 @@ library
     Basics.RepeatingKeyXor
     Basics.BreakRepeatingKeyXor,
     Basics.AESInECB
+    Basics.DetectAESInECB
   build-depends:
     base,
     split,

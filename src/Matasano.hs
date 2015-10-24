@@ -7,6 +7,7 @@ import Basics.DetectSingleCharacterXor (singleXorBreakMany)
 import Basics.RepeatingKeyXor (repeatingXorEncrypt)
 import Basics.BreakRepeatingKeyXor (repeatingXorBreak)
 import Basics.AESInECB (aesEcbDecrypt)
+import Basics.DetectAESInECB (detectAesEcb)
 
 import Util.Convert (decode16)
 
@@ -19,12 +20,13 @@ args2 f (x:y:xs) = f x y
 s1q1 = args1 transcode16to64
 s1q2 = args2 fixedXor
 s1q3 = args1 $ snd . singleXorBreak . decode16
-s1q4 s = snd $ singleXorBreakMany $ map decode16 s
+s1q4 xs = snd $ singleXorBreakMany $ map decode16 xs
 s1q5 = args2 repeatingXorEncrypt
 s1q6 = args1 repeatingXorBreak
 s1q7 = args2 aesEcbDecrypt
+s1q8 xs = detectAesEcb $ map decode16 xs
 
 solutions :: [[[String] -> String]]
 solutions = [
-    [s1q1, s1q2, s1q3, s1q4, s1q5, s1q6, s1q7]
+    [s1q1, s1q2, s1q3, s1q4, s1q5, s1q6, s1q7, s1q8]
   ]
