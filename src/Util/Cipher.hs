@@ -1,5 +1,5 @@
 module Util.Cipher (
-  singleXorDecrypt', singleXorEncrypt',
+  singleXorDecrypt, singleXorEncrypt,
   score
 ) where
 
@@ -10,10 +10,10 @@ import Data.Char (isControl, isSpace, isAscii, isPunctuation,
                   toLower)
 import Data.Word (Word8)
 
-singleXorDecrypt' :: Word8 -> ByteString -> ByteString
-singleXorDecrypt' key = BS.map (xor key)
+singleXorDecrypt :: Word8 -> ByteString -> ByteString
+singleXorDecrypt key = BS.map (xor key)
 
-singleXorEncrypt' = singleXorDecrypt'
+singleXorEncrypt = singleXorDecrypt
 
 -- See: https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language
 letterFrequency :: (Fractional a) => Char -> a

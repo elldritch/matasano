@@ -5,18 +5,18 @@ import Data.List (minimumBy, transpose)
 import Data.List.Split (chunksOf)
 import Data.Ord (comparing)
 
-import Util.Convert (decode16', decode64', viewS, makeS)
+import Util.Convert (decode16, decode64, viewS, makeS)
 
 import Basics.SingleByteXorCipher (singleXorBreak)
 import Basics.RepeatingKeyXor (repeatingXorDecrypt)
 
 repeatingXorBreak :: String -> String
-repeatingXorBreak input = viewS $ decode16' $ repeatingXorDecrypt key ciphertext
+repeatingXorBreak input = viewS $ decode16 $ repeatingXorDecrypt key ciphertext
   where ciphertext = base64ToChars input
         keySize = fst $ minimumBy (comparing snd) [(ks, blockDistance' ks ciphertext) | ks <- [4..40]]
         chunks = transpose $ chunksOf keySize ciphertext
         key = map (toEnum . fst . singleXorBreak . makeS) chunks
-        base64ToChars = viewS . decode64'
+        base64ToChars = viewS . decode64
 
 average :: (Fractional a) => [a] -> a
 average xs = sum xs / fromIntegral (length xs)

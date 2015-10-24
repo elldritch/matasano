@@ -1,7 +1,7 @@
 module Util.Convert (
   padLeading, pad0,
-  decode16', encode16',
-  decode64', encode64',
+  decode16, encode16,
+  decode64, encode64,
   viewS, viewN,
   makeS, makeN
 ) where
@@ -24,17 +24,17 @@ _padLeading c l s = if l > 0 then c : _padLeading c (l - 1) s else s
 pad0 :: Int -> String -> String
 pad0 = padLeading '0'
 
-decode16' :: String -> ByteString
-decode16' s = pack $ map (fst . head . readHex) $ chunksOf 2 s
+decode16 :: String -> ByteString
+decode16 s = pack $ map (fst . head . readHex) $ chunksOf 2 s
 
-encode16' :: ByteString -> String
-encode16' b = concatMap (\w -> pad0 2 $ showHex w "") $ unpack b
+encode16 :: ByteString -> String
+encode16 b = concatMap (\w -> pad0 2 $ showHex w "") $ unpack b
 
-encode64' :: ByteString -> String
-encode64' b = BS8.unpack $ BS64.encode b
+encode64 :: ByteString -> String
+encode64 b = BS8.unpack $ BS64.encode b
 
-decode64' :: String -> ByteString
-decode64' s = case BS64.decode $ BS8.pack $ concat $ lines s of
+decode64 :: String -> ByteString
+decode64 s = case BS64.decode $ BS8.pack $ concat $ lines s of
   Left err -> error err
   Right result -> result
 
