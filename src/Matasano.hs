@@ -15,8 +15,8 @@ args2 f (x:y:xs) = f x y
 
 s1q1 = args1 transcode16to64
 s1q2 = args2 fixedXor
-s1q3 = args1 singleXorBreak
-s1q4 = singleXorBreakMany
+s1q3 = args1 $ snd . singleXorBreak
+s1q4 = snd . singleXorBreakMany
 s1q5 = args2 repeatingXorEncrypt
 s1q6 = args1 repeatingXorBreak
 

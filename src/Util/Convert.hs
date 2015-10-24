@@ -4,7 +4,7 @@ module Util.Convert (
   decode16, encode16,
   decode16', encode16',
   decode64, encode64,
-  encode64',
+  decode64', encode64',
   decode64Char, encode64Char,
   viewS, viewN,
   makeS, makeN
@@ -69,6 +69,11 @@ decode64 = fst . head . readInt 64 (\c ->
       Just x -> True
       Nothing -> False)
   decode64Char
+
+decode64' :: String -> ByteString
+decode64' s = case BS64.decode $ BS8.pack $ concat $ lines s of
+  Left err -> error err
+  Right result -> result
 
 viewS :: ByteString -> String
 viewS = BS8.unpack
