@@ -47,7 +47,7 @@ encode16 :: (Integral a, Show a) => a -> String
 encode16 n = showHex n ""
 
 encode16' :: ByteString -> String
-encode16' b = concatMap (`showHex` "") $ BS.unpack b
+encode16' b = concatMap (\w -> pad0 2 $ showHex w "") $ BS.unpack b
 
 base64Table = ['A'..'Z'] ++ ['a'..'z'] ++ ['0'..'9'] ++ "+/"
 
@@ -73,11 +73,11 @@ decode64 = fst . head . readInt 64 (\c ->
 viewS :: ByteString -> String
 viewS = BS8.unpack
 
-viewN :: ByteString -> [Int]
+viewN :: (Integral a) => ByteString -> [a]
 viewN b = map fromIntegral $ BS.unpack b
 
 makeS :: String -> ByteString
 makeS = BS8.pack
 
-makeN :: [Int] -> ByteString
+makeN :: (Integral a) => [a] -> ByteString
 makeN xs = BS.pack $ map fromIntegral xs

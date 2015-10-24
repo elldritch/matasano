@@ -9,5 +9,6 @@ import Util.Convert (decode16', viewN)
 singleXorBreak :: String -> String
 singleXorBreak ciphertext = maximumBy scoreOrd candidates
   where keys = [0..255]
+        candidates = [intsToChars $ singleXorDecrypt' k $ hexToInts ciphertext | k <- keys]
         hexToInts = viewN . decode16'
-        candidates = [map toEnum $ singleXorDecrypt' k $ hexToInts ciphertext | k <- keys]
+        intsToChars = map toEnum
