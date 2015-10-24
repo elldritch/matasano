@@ -1,9 +1,10 @@
 module Basics.FixedXor (fixedXor) where
 
 import Data.Bits (xor)
-import Util.Convert (decode16', encode16', viewN, makeN)
+import qualified Data.ByteString as BS (zipWith)
+
+import Util.Convert (decode16', encode16', makeN)
 
 fixedXor :: String -> String -> String
-fixedXor a b = intsToHex $ zipWith xor (hexToInts a) (hexToInts b :: [Int])
-  where hexToInts = viewN . decode16'
-        intsToHex = encode16' . makeN
+fixedXor a b = intsToHex $ BS.zipWith xor (decode16' a) (decode16' b)
+  where intsToHex = encode16' . makeN

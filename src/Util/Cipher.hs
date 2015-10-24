@@ -4,13 +4,15 @@ module Util.Cipher (
 ) where
 
 import Data.Bits (xor)
+import Data.ByteString (ByteString)
+import qualified Data.ByteString as BS (map)
 import Data.Char (isControl, isSpace, isAscii, isPunctuation,
                   toLower)
+import Data.Word (Word8)
 
-singleXorDecrypt' :: Int -> [Int] -> [Int]
-singleXorDecrypt' key = map (xor key)
+singleXorDecrypt' :: Word8 -> ByteString -> ByteString
+singleXorDecrypt' key = BS.map (xor key)
 
-singleXorEncrypt' :: Int -> [Int] -> [Int]
 singleXorEncrypt' = singleXorDecrypt'
 
 -- See: https://en.wikipedia.org/wiki/Letter_frequency#Relative_frequencies_of_letters_in_the_English_language

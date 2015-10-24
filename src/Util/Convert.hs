@@ -9,13 +9,10 @@ module Util.Convert (
 import Numeric (showIntAtBase, readInt,
                 readHex, showHex)
 
-import Data.ByteString as BS (ByteString, pack, unpack)
-import qualified Data.ByteString.Char8 as BS8
-import qualified Data.ByteString.Base64 as BS64
+import Data.ByteString (ByteString, pack, unpack)
+import qualified Data.ByteString.Char8 as BS8 (pack, unpack)
+import qualified Data.ByteString.Base64 as BS64 (encode, decode)
 
-import Data.Char (intToDigit, digitToInt)
-import Data.Maybe (fromMaybe)
-import Data.List (elemIndex, find)
 import Data.List.Split (chunksOf)
 
 padLeading :: Char -> Int -> String -> String
@@ -28,10 +25,10 @@ pad0 :: Int -> String -> String
 pad0 = padLeading '0'
 
 decode16' :: String -> ByteString
-decode16' s = BS.pack $ map (fst . head . readHex) $ chunksOf 2 s
+decode16' s = pack $ map (fst . head . readHex) $ chunksOf 2 s
 
 encode16' :: ByteString -> String
-encode16' b = concatMap (\w -> pad0 2 $ showHex w "") $ BS.unpack b
+encode16' b = concatMap (\w -> pad0 2 $ showHex w "") $ unpack b
 
 encode64' :: ByteString -> String
 encode64' b = BS8.unpack $ BS64.encode b
@@ -45,10 +42,10 @@ viewS :: ByteString -> String
 viewS = BS8.unpack
 
 viewN :: (Integral a) => ByteString -> [a]
-viewN b = map fromIntegral $ BS.unpack b
+viewN b = map fromIntegral $ unpack b
 
 makeS :: String -> ByteString
 makeS = BS8.pack
 
 makeN :: (Integral a) => [a] -> ByteString
-makeN xs = BS.pack $ map fromIntegral xs
+makeN xs = pack $ map fromIntegral xs
