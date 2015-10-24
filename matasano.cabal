@@ -23,12 +23,15 @@ library
     Basics.SingleByteXorCipher,
     Basics.DetectSingleCharacterXor,
     Basics.RepeatingKeyXor
-    Basics.BreakRepeatingKeyXor
+    Basics.BreakRepeatingKeyXor,
+    Basics.AESInECB
   build-depends:
     base,
     split,
     bytestring,
-    base64-bytestring
+    base64-bytestring,
+    cryptonite,
+    memory
   default-language: Haskell2010
 
 executable matasano
